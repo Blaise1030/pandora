@@ -1,9 +1,8 @@
 import React from 'react';
 const LogoComponent = () => {
     return (
-      
+      <a href="">
         <a
-          href=""
           style={{
             zIndex:2,
             position: "absolute",
@@ -38,7 +37,7 @@ const LogoComponent = () => {
             PANDORA
           </h1>
         </a>
-      
+      </a>
     );
   };
   

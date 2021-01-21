@@ -4,6 +4,15 @@ const ChatComponent = () => {
   const [input, setInput] = React.useState("");
   const [tryDisconnect, setTryDisconnect] = React.useState(false);
   const [dataList, setDataList] = React.useState([]);
+  const [itemIsLoading, setItemIsLoading] = React.useState(false);
+
+  function scroll() {
+    setTimeout(() => {
+      var objDiv = document.getElementById("scrollingDiv");
+      objDiv.scrollTop = objDiv.scrollHeight;
+    }, 0);
+  }
+
   return (
     <div>
       <style>{`
@@ -40,6 +49,7 @@ const ChatComponent = () => {
       >
         <div style={{ height: "6%" }}></div>
         <div
+          id="scrollingDiv"
           style={{
             height: "88%",
             paddingTop: "20px",
@@ -76,17 +86,18 @@ const ChatComponent = () => {
               width: "80px",
               height: "45px",
               transition: "box-shadow .3s",
+              boxShadow: "0 0 10px rgba(33, 33, 33, 0.8)",
               backgroundColor: tryDisconnect ? "#eb596e" : "rgba(0, 0, 0, 1)",
               borderRadius: "10px",
               borderTopRightRadius: "0",
               borderBottomRightRadius: "0",
               border: "none",
               textAlign: "center",
-              textDecoration: "none",              
+              textDecoration: "none",
               fontSize: "16px",
             }}
           >
-            <span style={{ color: "white"}}>
+            <span style={{ color: "white" }}>
               {tryDisconnect ? "sure ?" : "leave"}
             </span>
           </button>
@@ -95,8 +106,12 @@ const ChatComponent = () => {
             style={{ width: "100%" }}
             onSubmit={(e) => {
               e.preventDefault();
-              setDataList([...dataList, input]);              
-              setInput("");
+
+              if (input.trim().length > 1) {
+                setDataList([...dataList, input]);
+                setInput("");
+              }
+              scroll();
             }}
           >
             <input

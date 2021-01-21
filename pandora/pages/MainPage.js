@@ -18,10 +18,10 @@ const MainPage = () => {
             background: linear-gradient(340deg, #2c9076, #6369c1, #e16060);
             background-size: 600% 600%;
 
-            -webkit-animation: AnimationName 15s ease infinite;
-            -moz-animation: AnimationName 15s ease infinite;
-            -o-animation: AnimationName 15s ease infinite;
-            animation: AnimationName 15s ease infinite;
+            -webkit-animation: AnimationName 50s ease infinite;
+            -moz-animation: AnimationName 50s ease infinite;
+            -o-animation: AnimationName 50s ease infinite;
+            animation: AnimationName 50s ease infinite;
           }
 
           @-webkit-keyframes AnimationName {
