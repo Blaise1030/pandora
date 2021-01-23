@@ -1,15 +1,14 @@
 import ChatComponent from "./Components/ChatComponent";
 import LogoComponent from "./Components/Logo";
 import IntroductionComponent from "./Components/IntroductionComponent";
-import React from "react";
+import queryString from 'querystring'
+import React, { useEffect } from "react";
 
-const MainPage = () => {
+
+const MainPage = ({ location }) => {
   const [isClicked, setIsClicked] = React.useState(false);
 
-  function componentResolver(isCliked) {
-    if (isClicked) return <ChatComponent />;
-    return <IntroductionComponent setIsClicked={setIsClicked} />;
-  }
+
   return (
     <>
       <style>
@@ -83,12 +82,13 @@ const MainPage = () => {
           alignItems: "center",
         }}
       >
+
         <LogoComponent />
         {!isClicked ? (
           <IntroductionComponent setIsClicked={setIsClicked} />
         ) : (
-          <ChatComponent />
-        )}
+            <ChatComponent userId={Date.now().toString()} room={'room1'} />
+          )}
       </div>
     </>
   );
