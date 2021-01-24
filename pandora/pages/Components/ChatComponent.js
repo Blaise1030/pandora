@@ -106,28 +106,14 @@ const ChatComponent = () => {
         ::-webkit-scrollbar {
           width: 0px;  /* Remove scrollbar space */
           background: transparent;  /* Optional: just make scrollbar invisible */
-      }
-      .start-button:hover {
-        box-shadow: 0 0 10px rgba(33, 33, 33, 0.8);
-        background-color: rgba(0, 0, 0, 0.1);
-      }
-      ::-webkit-scrollbar-thumb {
+        }
+        .start-button:hover {
+          box-shadow: 0 0 10px rgba(33, 33, 33, 0.8);
+          background-color: rgba(0, 0, 0, 0.1);
+        }
+        ::-webkit-scrollbar-thumb {
           background: #FF0000;
-      }
-      .fade-in {
-	      animation: fadeIn 2s infinte;
-  	    opacity: 1;
-      }
-
-      @keyframes fadeIn {
-        from {
-  	      opacity: 0;
         }
-        to {
- 	      opacity: 1;
-        }
-      }
-
         `}</style>
 
       <div
