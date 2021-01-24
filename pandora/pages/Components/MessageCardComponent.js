@@ -1,7 +1,7 @@
-const MessageCardComponent = ({ userId, msg }) => {
+const MessageCardComponent = ({ socketId, msg }) => {
   return (
     <div>
-      {userId === msg.user ? (<div style={
+      {socketId === msg.user ? (<div style={
         {
           textAlign: "start",
           wordWrap: "break-word",

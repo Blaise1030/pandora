@@ -7,22 +7,39 @@ let socket;
 // When user come in we will assign a socket to the user as userId;
 // Assigns the user a room id from a list of unrequested if there is one ;
 
-const ChatComponent = ({ userId, room }) => {
+const ChatComponent = () => {
   const [input, setInput] = React.useState("");
   const [tryDisconnect, setTryDisconnect] = React.useState(false);
   const [messageList, setMessageList] = React.useState([]);
+  const [socketId, setSocketId] = React.useState("");
+  const [currentRoom, setCurrentRoom] = React.useState("");
 
   const ENDPOINT = 'localhost:5000';
 
   useEffect(() => {
     socket = io(ENDPOINT);
-    socket.emit('join', { userId, room })
+    socket.emit('join')
     return () => {
       socket.emit('disconnect');
       socket.off();
       io.socket.removeAllListeners()
     }
   }, [])
+
+  useEffect(() => {
+    socket.on('join-id', (userObject) => {
+      setSocketId(userObject.socketId);
+      if (userObject && userObject.room) {
+        setCurrentRoom(userObject.room);
+        socket.emit('agree-join', userObject)
+      }
+    });
+    socket.on('partner-disconnected', () => {
+      setCurrentRoom(null)
+      socket.emit('agree-leave', { socketId: socketId, room: currentRoom })
+    });
+    socket.on()
+  }, [socketId])
 
   useEffect(() => {
     socket.on('message', (message) => {
@@ -38,10 +55,14 @@ const ChatComponent = ({ userId, room }) => {
     }, 0);
   }
 
+  const searchNew = () => {
+    socket.emit('search-new', { socketId: socketId, room: currentRoom })
+  }
+
   const sendMessage = (e) => {
     e.preventDefault();
-    if (input || input.length >= 1) {
-      socket.emit('sendMessage', input)
+    if (input && input.length >= 1 && currentRoom) {
+      socket.emit('send-message', input)
       setInput("")
       scroll();
     }
@@ -93,7 +114,7 @@ const ChatComponent = ({ userId, room }) => {
             color: "white",
             textShadow: '0px 0px 30px black'
           }}>
-            {(room) ? 'connected' : 'searching ...'}
+            {currentRoom ? 'connected' : 'searching ...'}
           </p>
         </div>
         <div
@@ -108,7 +129,7 @@ const ChatComponent = ({ userId, room }) => {
           {messageList.map((msg, index) =>
           (<MessageCardComponent
             key={index}
-            userId={userId}
+            socketId={socketId}
             msg={msg}
           />)
           )}
@@ -128,9 +149,8 @@ const ChatComponent = ({ userId, room }) => {
             type="link"
             className="start-button"
             onClick={(e) => {
-              if (tryDisconnect) {
-                socket.emit('searching')
-              }
+              if (tryDisconnect)
+                searchNew()
               setTryDisconnect(!tryDisconnect);
             }}
             style={{

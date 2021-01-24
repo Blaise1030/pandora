@@ -1,0 +1,7 @@
+1. Events -> join , send , disconnect , reconnect 
+
+users = []
+
+When join:
+    1. Adds the { user, room } to the users array
+    2. Finds an idle user choose one randomly and sets the user in users list to { user,room}
