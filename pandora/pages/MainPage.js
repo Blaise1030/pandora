@@ -1,8 +1,7 @@
 import ChatComponent from "./Components/ChatComponent";
 import LogoComponent from "./Components/Logo";
 import IntroductionComponent from "./Components/IntroductionComponent";
-import queryString from 'querystring'
-import React, { useEffect } from "react";
+import React from "react";
 
 
 const MainPage = ({ location }) => {

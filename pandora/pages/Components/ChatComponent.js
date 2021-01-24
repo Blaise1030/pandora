@@ -17,8 +17,7 @@ const ChatComponent = () => {
   const [typing, setTyping] = React.useState(false);
   const [timeOut, timeOutSetter] = React.useState(null);
   const [partnerTyping, setPartnerTyping] = React.useState(false);
-
-  const ENDPOINT = 'localhost:5000';
+  const ENDPOINT = 'https://pandora-app2021.herokuapp.com/';
 
 
   function timeoutFunction() {
@@ -155,11 +154,11 @@ const ChatComponent = () => {
           }}
         >
           {messageList.map((msg, index) =>
-          (<MessageCardComponent
+          (socketId ? (<MessageCardComponent
             key={index}
             socketId={socketId}
             msg={msg}
-          />)
+          />) : <div></div>)
           )}
         </div>
 
