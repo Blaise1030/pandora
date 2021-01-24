@@ -1,5 +1,6 @@
 import express = require("express");
 import http from 'http';
+import cors from 'cors';
 const PORT = process.env.PORT || 5000
 const app = express();
 const server = http.createServer(app);
@@ -142,5 +143,5 @@ io.on('connection', (socket: any) => {
     })
 
 })
-
+app.use(cors());
 server.listen(PORT);

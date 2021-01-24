@@ -5,6 +5,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const express = require("express");
 const http_1 = __importDefault(require("http"));
+const cors_1 = __importDefault(require("cors"));
 const PORT = process.env.PORT || 5000;
 const app = express();
 const server = http_1.default.createServer(app);
@@ -122,5 +123,6 @@ io.on('connection', (socket) => {
             socket.broadcast.to(user.room).emit('partner-no-longer-typing', false);
     });
 });
+app.use(cors_1.default());
 server.listen(PORT);
 //# sourceMappingURL=index.js.map
