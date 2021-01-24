@@ -1,7 +1,8 @@
 const MessageCardComponent = ({ socketId, msg }) => {
+  console.log(socketId)
   return (
     <div>
-      {socketId === msg.user ? (<div style={
+      {socketId === msg.socketId ? (<div style={
         {
           textAlign: "start",
           wordWrap: "break-word",
@@ -22,7 +23,8 @@ const MessageCardComponent = ({ socketId, msg }) => {
         }
       }>
         {msg.text}
-      </div>) : (
+      </div>) :
+        (
           <div
             style={{
               textAlign: "start",

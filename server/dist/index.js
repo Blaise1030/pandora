@@ -99,17 +99,27 @@ io.on('connection', (socket) => {
         const socketId = socket.id;
         const user = findsUser(socketId);
         if (user && user.room)
-            io.to(user.room).emit(PARTNER_DISCONNECTED);
+            io.to(user.room).emit(PARTNER_DISCONNECTED, { socketId: 'admin', text: "You are disconnected" });
         deleteUser(socketId);
     });
     socket.on(SEARCH_NEW, (user) => {
         if (user && user.room)
-            io.to(user.room).emit(PARTNER_DISCONNECTED);
+            io.to(user.room).emit(PARTNER_DISCONNECTED, { socketId: 'admin', text: "You are disconnected" });
     });
     socket.on(SEND_MESSAGE, (msg) => {
         const user = findsUser(socket.id);
         if (user && user.room)
             io.to(user.room).emit('message', { socketId: socket.id, text: msg });
+    });
+    socket.on('typingMessage', () => {
+        const user = findsUser(socket.id);
+        if (user && user.room)
+            socket.broadcast.to(user.room).emit('partner-typing', true);
+    });
+    socket.on('noLongerTypingMessage', () => {
+        const user = findsUser(socket.id);
+        if (user && user.room)
+            socket.broadcast.to(user.room).emit('partner-no-longer-typing', false);
     });
 });
 server.listen(PORT);

@@ -13,8 +13,30 @@ const ChatComponent = () => {
   const [messageList, setMessageList] = React.useState([]);
   const [socketId, setSocketId] = React.useState("");
   const [currentRoom, setCurrentRoom] = React.useState("");
+  const [newHeader, setNewHeader] = React.useState("Searching for John Doe ...");
+  const [typing, setTyping] = React.useState(false);
+  const [timeOut, timeOutSetter] = React.useState(null);
+  const [partnerTyping, setPartnerTyping] = React.useState(false);
 
   const ENDPOINT = 'localhost:5000';
+
+
+  function timeoutFunction() {
+    clearTimeout(timeOut);
+    setTyping(false)
+    socket.emit('noLongerTypingMessage');
+  }
+
+  function onKeyDownNotEnter() {
+    if (!typing) {
+      setTyping(true)
+      socket.emit('typingMessage');
+      timeOutSetter(setTimeout(timeoutFunction, 3000));
+    } else {
+      clearTimeout(timeOut);
+      timeOutSetter(setTimeout(timeoutFunction, 3000));
+    }
+  }
 
   useEffect(() => {
     socket = io(ENDPOINT);
@@ -36,9 +58,11 @@ const ChatComponent = () => {
     });
     socket.on('partner-disconnected', () => {
       setCurrentRoom(null)
+      setNewHeader("You are disconnected. Searching for John Doe...")
       socket.emit('agree-leave', { socketId: socketId, room: currentRoom })
     });
-    socket.on()
+    socket.on('partner-typing', (payload) => setPartnerTyping(payload))
+    socket.on('partner-no-longer-typing', (payload) => setPartnerTyping(payload))
   }, [socketId])
 
   useEffect(() => {
@@ -61,6 +85,7 @@ const ChatComponent = () => {
 
   const sendMessage = (e) => {
     e.preventDefault();
+    timeoutFunction()
     if (input && input.length >= 1 && currentRoom) {
       socket.emit('send-message', input)
       setInput("")
@@ -89,6 +114,20 @@ const ChatComponent = () => {
       ::-webkit-scrollbar-thumb {
           background: #FF0000;
       }
+      .fade-in {
+	      animation: fadeIn 2s infinte;
+  	    opacity: 1;
+      }
+
+      @keyframes fadeIn {
+        from {
+  	      opacity: 0;
+        }
+        to {
+ 	      opacity: 1;
+        }
+      }
+
         `}</style>
 
       <div
@@ -112,9 +151,11 @@ const ChatComponent = () => {
             paddingLeft: "26px",
             textAlign: 'start',
             color: "white",
+            fontSize: '15px',
             textShadow: '0px 0px 30px black'
-          }}>
-            {currentRoom ? 'connected' : 'searching ...'}
+          }}
+          >
+            {currentRoom ? partnerTyping ? "John Doe is typing ..." : 'Connected to John Doe' : newHeader}
           </p>
         </div>
         <div
@@ -122,6 +163,7 @@ const ChatComponent = () => {
           style={{
             height: "86%",
             paddingTop: "20px",
+            scrollBehavior: "smooth",
             overflowY: "scroll",
             position: "relative",
           }}
@@ -149,7 +191,7 @@ const ChatComponent = () => {
             type="link"
             className="start-button"
             onClick={(e) => {
-              if (tryDisconnect)
+              if (tryDisconnect && currentRoom)
                 searchNew()
               setTryDisconnect(!tryDisconnect);
             }}
@@ -181,6 +223,7 @@ const ChatComponent = () => {
               value={input}
               placeholder={"Type something ... "}
               onClick={(e) => setTryDisconnect(false)}
+              onKeyDown={(e) => onKeyDownNotEnter()}
               onChange={(e) => {
                 setTryDisconnect(false);
                 setInput(e.target.value);
