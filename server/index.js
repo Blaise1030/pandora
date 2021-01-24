@@ -14,89 +14,76 @@ const io = socketio(server, {
     },
 });
 
+currentUsers = [];
+
+const addNewUsers = (socketId) => {
+    currentUsers
+}
 
 
-// const users = [];
-
-// const getIdleUser = () => {
-//     // Chooses a user by random 
-//     const allIdleUsers = users.filter((user) => user.room);
-//     return allIdleUsers[Math.floor(Math.random() * allIdleUsers)];
-// }
-
-// const removeUser = (socketId) => {
-//     const index = users.findIndex((user) => user.socketId === socketId);
-//     if (index != -1) {
-//         return users.splice(index, 1)[0];
-//     }
-// }
-
-// const setUserRoom = (socketId, roomId) => {
-//     users = users.map((user) => {
-//         user.socketId === socketId ?
-//             {
-//                 socketId: user.socketId,
-//                 room: roomId
-//             } : user
-//     })
-// }
-
-// const addUser = (userData) => {
-//     users.push(userData);
-//     return users;
-// }
-
-// const findUser = (socketId) => users.find((user) => user.socketId === socketId)
-
-// const pairUsers = (userSocketId) => {
-//     const findUser = getIdleUser();
-//     const newRoom = findUser.socketId + findUser;
-//     setUserRoom(findUser.socketId, newRoom);
-//     setUserRoom(userSocketId, newRoom);
-//     return newRoom
-// }
 
 io.on('connection', socket => {
-    // socket.on("join", (socket) => {
+    socket.on('join', () => {
+        const socketId = socket.id;
+
+
+    })
+    // socket.on("join", () => {
     //     const socketId = socket.id;
     //     addUser({ socketId: socketId });
-    //     pairUsers(socketId);
-    //     socket.emit("join-id", findUser(socketId));
+    //     const { findUser, newRoom, userSocketId } = pairUsers(socketId);
+    //     // generates a join id for user
+    //     socket.emit("join-id", findUser(userSocketId));
+    //     // broadcast to the user 
+    //     socket.broadcast.to(findUser.socketId).emit("join-id", findUser(findUser));
     // })
 
     // socket.on('disconnect', () => {
-    //     const user = removeUser(socket.id)
-    //     if (user)
-    //         io.to(user.room).emit('message', { user: 'admin', text: `${user.socketId} has disconnect` })
+    //     const user = removeUser(socket.id);
+    //     if (user && user.room) {
+    //         io.to(user.room).emit('user_disconnected', {})
+    //     }
     // })
+
+    // socket.on('request_room', () => {
+    //     const currentUser = findUser(socket.id);
+    //     if (currentUser && currentUser.room) {
+    //         io.to(user.room).emit('user_disconnected', {})
+    //     }
+    //     const { findUser, newRoom, userSocketId } = pairUsers(socketId);
+    //     socket.emit()
+
+    // })
+
+
 
     // socket.on('request-room', () => {
 
     // })
 
 
-    socket.on('join', ({ userId, room }, callback) => {
-        const { error, user } = addUser({ id: socket.id, userId: userId, room: room })
-        if (error) return callback(error)
-        socket.emit('message', { user: 'admin', text: `${user.userId} you are connected` });
-        socket.broadcast.to(user.room).emit('message', { user: "admin", text: `${user.userId} has joined` })
-        socket.join(user.room);
-    })
+    // socket.on('join', ({ userId, room }, callback) => {
+    //     const { error, user } = addUser({ id: socket.id, userId: userId, room: room })
+    //     if (error) return callback(error)
+    //     socket.emit('message', { user: 'admin', text: `${user.userId} you are connected` });
+    //     socket.broadcast.to(user.room).emit('message', { user: "admin", text: `${user.userId} has joined` })
+    //     socket.join(user.room);
+    // })
 
-    socket.on('disconnect', () => {
-        const user = removeUser(socket.id);
-        if (user)
-            io.to(user.room).emit('message', { user: 'admin', text: `${user.userId} has disconnected` })
-    })
-    socket.on('sendMessage', (message, callback) => {
-        const user = getUser(socket.id);
-        // const message = {
-        //     user: user.userId,
-        //     text: message
-        // }
-        if (user && user.room)
-            io.to(user.room).emit('message', { user: user.userId, text: message })
-    })
+    // socket.on('disconnect', () => {
+    //     const user = removeUser(socket.id);
+    //     if (user)
+    //         io.to(user.room).emit('message', { user: 'admin', text: `${user.userId} has disconnected` })
+    // })
+    // socket.on('sendMessage', (message, callback) => {
+    //     const user = getUser(socket.id);
+    //     // const message = {
+    //     //     user: user.userId,
+    //     //     text: message
+    //     // }
+    //     if (user && user.room)
+    //         io.to(user.room).emit('message', { user: user.userId, text: message })
+    // })
 
 
 
