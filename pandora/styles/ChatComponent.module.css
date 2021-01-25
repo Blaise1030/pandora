@@ -1,7 +1,9 @@
 .chatScroll::-webkit-scrollbar {
     display: none;
 }
-
+.inputStyle::placeholder{
+    color:white;
+}
 .chatScroll {
     -ms-overflow-style: none;
     width: 100%;
@@ -9,3 +11,66 @@
     overflow-y: scroll;
     scroll-behavior: smooth,
 }
+.inputDiv {
+    height: 8%;
+    display: flex;
+    flex-direction: row;
+    padding-top: 5px;
+    padding-left: 26px;
+    padding-right: 26px;
+}
+.leaveButton .confirmLeaveButton:hover {
+    box-shadow: 0 0 50px rgba(33, 33, 33, 0.8);
+    background-color: rgba(0, 0, 0, 1);
+}
+.leaveButton{
+    padding-top: 13px;
+    text-align: center;
+    width: 90px;
+    height: 45px;
+    transition: box-shadow .3s;
+    box-shadow: 0 0 10px rgba(33, 33, 33, 0.8);
+    background-color: rgba(0, 0, 0, 1);
+    border-radius: 10px;
+    border: "none";
+    text-align: "center";    
+    text-decoration: "none";
+    font-size: "16px";
+    outline: 'none';
+    -webkit-user-select: none;  
+    -moz-user-select: none;    
+    -ms-user-select: none;      
+    user-select: none;
+}
+.inputStyle {
+    height: 45px;
+    color: white;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    width: 100%;
+    padding: 20px;
+    font-weight: normal;
+    font-size: 15px;    
+}
+.confirmLeaveButton {
+    padding-top: 13px;
+    text-align: center;
+    width: 90px;
+    height: 45px;
+    transition: box-shadow .3s;
+    box-shadow: 0 0 10px rgba(33, 33, 33, 0.8);
+    background-color: #eb596e ;
+    border-radius: 10px;
+    border: "none";    
+    text-align: "center";
+    text-decoration: "none";
+    font-size: "16px";
+    outline: 'none';
+    -webkit-user-select: none;  
+    -moz-user-select: none;    
+    -ms-user-select: none;      
+    user-select: none;
+}
+
+

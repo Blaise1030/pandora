@@ -1,8 +1,7 @@
 .gradient {
     background: linear-gradient(340deg, #2c9076, #6369c1, #e16060);
     background-size: 600% 600%;
-    width: fit-content;
-
+   
     -webkit-animation: AnimationName 50s ease infinite;
     -moz-animation: AnimationName 50s ease infinite;
     -o-animation: AnimationName 50s ease infinite;
@@ -64,4 +63,15 @@
     100% {
         background-position: 29% 0%;
     }
+}
+
+
+.title{
+    height: 5vh;
+    color:white;
+    padding-left: 26px;
+    padding-top: 13px;
+    font-weight: bold;
+    font-size: 23px;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
