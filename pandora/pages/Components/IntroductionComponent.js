@@ -1,46 +1,17 @@
 import React from 'react';
+import { Grid, Typography } from '@material-ui/core'
+import styles from '../../styles/Introduction.module.css'
 const IntroductionComponent = (props) => {
   return (
-    <div>
-      <style jsx>
-        {`
-            .start-button:hover {
-              box-shadow: 0 0 50px rgba(33, 33, 33, 0.8);
-              background-color: rgba(0, 0, 0, 1);
-            }
-          `}
-      </style>
-      <h1
-        style={{
-          fontSize: "50px",
-          color: "white",
-          textAlign: "center",
-          maxWidth: "600px",
-        }}
-      >
+    <Grid container direction="column" justify="center" alignItems="center">
+      <p className={styles.introText}>
         Text whatever, wherever, whenever with a stranger.
-        </h1>
-
-      <button
-        className="start-button"
-        onClick={() => props.setIsClicked(true)}
-        style={{
-          outline: 'none',
-          transition: "box-shadow .3s",
-          backgroundColor: "rgba(0, 0, 0, 1)",
-          borderRadius: "10px",
-          fontWeight: "bold",
-          border: "none",
-          padding: "15px 32px",
-          textAlign: "center",
-          textDecoration: "none",
-          display: "inline-block",
-          fontSize: "16px",
-        }}
-      >
-        <span style={{ color: "white" }}> Open box ?</span>
-      </button>
-    </div>
+      </p>
+      <div className={styles.startButton}
+        onClick={() => props.setIsClicked(true)}>
+        <p className={styles.spanColor}>Open Box ?</p>
+      </div>
+    </Grid >
   );
 };
 

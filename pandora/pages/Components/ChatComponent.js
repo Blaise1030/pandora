@@ -1,4 +1,6 @@
 import React, { useEffect } from "react";
+import { Card, Container, Grid } from '@material-ui/core';
+import styles from '../../styles/ChatComponent.module.css'
 import MessageCardComponent from "./MessageCardComponent";
 import io from 'socket.io-client'
 
@@ -20,154 +22,126 @@ const ChatComponent = () => {
   const ENDPOINT = 'https://pandora-app2021.herokuapp.com/';
 
 
-  function timeoutFunction() {
-    clearTimeout(timeOut);
-    setTyping(false)
-    socket.emit('noLongerTypingMessage');
-  }
+  // function timeoutFunction() {
+  //   clearTimeout(timeOut);
+  //   setTyping(false)
+  //   socket.emit('noLongerTypingMessage');
+  // }
 
-  function onKeyDownNotEnter() {
-    if (!typing) {
-      setTyping(true)
-      socket.emit('typingMessage');
-      timeOutSetter(setTimeout(timeoutFunction, 3000));
-    } else {
-      clearTimeout(timeOut);
-      timeOutSetter(setTimeout(timeoutFunction, 3000));
-    }
-  }
+  // function onKeyDownNotEnter() {
+  //   if (!typing) {
+  //     setTyping(true)
+  //     socket.emit('typingMessage');
+  //     timeOutSetter(setTimeout(timeoutFunction, 3000));
+  //   } else {
+  //     clearTimeout(timeOut);
+  //     timeOutSetter(setTimeout(timeoutFunction, 3000));
+  //   }
+  // }
 
-  useEffect(() => {
-    socket = io(ENDPOINT);
-    socket.emit('join')
-    return () => {
-      socket.emit('disconnect');
-      socket.off();
-      io.socket.removeAllListeners()
-    }
-  }, [])
+  // useEffect(() => {
+  //   socket = io(ENDPOINT);
+  //   socket.emit('join')
+  //   return () => {
+  //     socket.emit('disconnect');
+  //     socket.off();
+  //     io.socket.removeAllListeners()
+  //   }
+  // }, [])
 
-  useEffect(() => {
-    socket.on('join-id', (userObject) => {
-      setSocketId(userObject.socketId);
-      if (userObject && userObject.room) {
-        setCurrentRoom(userObject.room);
-        socket.emit('agree-join', userObject)
-      }
-    });
-    socket.on('partner-disconnected', () => {
-      setCurrentRoom(null)
-      setNewHeader("You are disconnected. Searching for John Doe...")
-      socket.emit('agree-leave', { socketId: socketId, room: currentRoom })
-    });
-    socket.on('partner-typing', (payload) => setPartnerTyping(payload))
-    socket.on('partner-no-longer-typing', (payload) => setPartnerTyping(payload))
-  }, [socketId])
+  // useEffect(() => {
+  //   socket.on('join-id', (userObject) => {
+  //     setSocketId(userObject.socketId);
+  //     if (userObject && userObject.room) {
+  //       setCurrentRoom(userObject.room);
+  //       socket.emit('agree-join', userObject)
+  //     }
+  //   });
+  //   socket.on('partner-disconnected', () => {
+  //     setCurrentRoom(null)
+  //     setNewHeader("You are disconnected. Searching for John Doe...")
+  //     socket.emit('agree-leave', { socketId: socketId, room: currentRoom })
+  //   });
+  //   socket.on('partner-typing', (payload) => setPartnerTyping(payload))
+  //   socket.on('partner-no-longer-typing', (payload) => setPartnerTyping(payload))
+  // }, [socketId])
 
-  useEffect(() => {
-    socket.on('message', (message) => {
-      setMessageList((oldMsg) => [...oldMsg, message])
-      scroll()
-    })
-  }, [])
+  // useEffect(() => {
+  //   socket.on('message', (message) => {
+  //     setMessageList((oldMsg) => [...oldMsg, message])
+  //     scroll()
+  //   })
+  // }, [])
 
-  function scroll() {
-    setTimeout(() => {
-      var objDiv = document.getElementById("scrollingDiv");
-      objDiv.scrollTop = objDiv.scrollHeight;
-    }, 0);
-  }
+  // function scroll() {
+  //   setTimeout(() => {
+  //     var objDiv = document.getElementById("scrollingDiv");
+  //     objDiv.scrollTop = objDiv.scrollHeight;
+  //   }, 0);
+  // }
 
-  const searchNew = () => {
-    socket.emit('search-new', { socketId: socketId, room: currentRoom })
-  }
+  // const searchNew = () => {
+  //   socket.emit('search-new', { socketId: socketId, room: currentRoom })
+  // }
 
-  const sendMessage = (e) => {
-    e.preventDefault();
-    timeoutFunction()
-    if (input && input.length >= 1 && currentRoom) {
-      socket.emit('send-message', input)
-      setInput("")
-      scroll();
-    }
-  }
+  // const sendMessage = (e) => {
+  //   e.preventDefault();
+  //   timeoutFunction()
+  //   if (input && input.length >= 1 && currentRoom) {
+  //     socket.emit('send-message', input)
+  //     setInput("")
+  //     scroll();
+  //   }
+  // }
 
   return (
-    <div>
-      <style>{`
-        input[type=text] {
-          border: none;
-          outline:none;                
-        }
-        ::placeholder{
-          color:white;
-        }
-        ::-webkit-scrollbar {
-          width: 0px;  /* Remove scrollbar space */
-          background: transparent;  /* Optional: just make scrollbar invisible */
-        }
-        .start-button:hover {
-          box-shadow: 0 0 10px rgba(33, 33, 33, 0.8);
-          background-color: rgba(0, 0, 0, 0.1);
-        }
-        ::-webkit-scrollbar-thumb {
-          background: #FF0000;
-        }
-        `}</style>
-
-      <div
-        style={{
-          background: "rgba( 255, 255, 255, 0.25 )",
-          boxShadow: "0 8px 32px 0 rgba( 31, 38, 135, 0.27 )",
-          backdropFilter: "blur( 1.5px )",
-          WebkitBackdropFilter: "blur( 1.5px )",
-          borderRadius: "10px",
-          height: "600px",
-          width: "1000px",
-          maxHeight: "80vh",
-          maxWidth: "90vw",
-          textAlign: "center",
-          paddingBottom: "40px",
-        }}
-      >
-        <div style={{ height: "8%" }}>
-          <p style={{
-            paddingTop: '13px',
-            paddingLeft: "26px",
-            textAlign: 'start',
-            color: "white",
-            fontSize: '15px',
-            textShadow: '0px 0px 30px black'
-          }}
-          >
-            {currentRoom ? partnerTyping ? "John Doe is typing ..." : 'Connected to John Doe' : newHeader}
-          </p>
-        </div>
-        <div
-          id="scrollingDiv"
-          style={{
-            height: "86%",
-            paddingTop: "20px",
-            scrollBehavior: "smooth",
-            overflowY: "scroll",
-            position: "relative",
-          }}
-        >
-          {messageList.map((msg, index) =>
-          (socketId ? (<MessageCardComponent
-            key={index}
-            socketId={socketId}
-            msg={msg}
-          />) : <div></div>)
-          )}
-        </div>
-
+    <Grid container style={{ height: "100vh" }}>
+      <Grid item className={styles.chatScroll}>
+        <ChatCards socketId={'1'} msg={{ socketId: "admin", text: "message" }} />
+        <ChatCards socketId={'1'} msg={{ socketId: "1", text: "message" }} />
+        <ChatCards socketId={'1'} msg={{ socketId: "1", text: "message" }} />
+        <ChatCards socketId={'1'} msg={{ socketId: "1", text: "message" }} />
+        <ChatCards socketId={'1'} msg={{ socketId: "admin", text: "message" }} />
+        <ChatCards socketId={'1'} msg={{ socketId: "2", text: "message" }} />
+        <ChatCards socketId={'1'} msg={{ socketId: "2", text: "message" }} />
+        <ChatCards socketId={"1"} msg={{ socketId: "2", text: "message" }} />
+        <ChatCards socketId={'1'} msg={{ socketId: "2", text: "message" }} />
+        <ChatCards socketId={'1'} msg={{ socketId: "2", text: "message" }} />
+        <ChatCards socketId={'1'} msg={{ socketId: "2", text: "message" }} />
+        <ChatCards socketId={"1"} msg={{ socketId: "2", text: "message" }} />
+        <ChatCards socketId={'1'} msg={{ socketId: "2", text: "message" }} />
+        <ChatCards socketId={'1'} msg={{ socketId: "2", text: "message" }} />
+        <ChatCards socketId={'1'} msg={{ socketId: "2", text: "message" }} />
+        <ChatCards socketId={"1"} msg={{ socketId: "2", text: "message" }} />
+        <ChatCards socketId={'1'} msg={{ socketId: "2", text: "message" }} />
+        <ChatCards socketId={'1'} msg={{ socketId: "admin", text: "message" }} />
+        <ChatCards socketId={'1'} msg={{ socketId: "1", text: "message" }} />
+        <ChatCards socketId={'1'} msg={{ socketId: "1", text: "message" }} />
+        <ChatCards socketId={'1'} msg={{ socketId: "1", text: "message" }} />
+        <ChatCards socketId={'1'} msg={{ socketId: "admin", text: "message" }} />
+        <ChatCards socketId={'1'} msg={{ socketId: "2", text: "message" }} />
+        <ChatCards socketId={'1'} msg={{ socketId: "2", text: "message" }} />
+        <ChatCards socketId={"1"} msg={{ socketId: "2", text: "message" }} />
+        <ChatCards socketId={'1'} msg={{ socketId: "2", text: "message" }} />
+        <ChatCards socketId={'1'} msg={{ socketId: "2", text: "message" }} />
+        <ChatCards socketId={'1'} msg={{ socketId: "2", text: "message" }} />
+        <ChatCards socketId={"1"} msg={{ socketId: "2", text: "message" }} />
+        <ChatCards socketId={'1'} msg={{ socketId: "2", text: "message" }} />
+        <ChatCards socketId={'1'} msg={{ socketId: "2", text: "message" }} />
+        <ChatCards socketId={'1'} msg={{ socketId: "2", text: "message" }} />
+        <ChatCards socketId={"1"} msg={{ socketId: "2", text: "message" }} />
+        <ChatCards socketId={'1'} msg={{ socketId: "2", text: "message" }} />
+      </Grid>
+      <Grid item style={{ width: "100%" }}
+        variant="row"
+        justify="start"
+        alignItems="center">
         <div
           style={{
             height: "8%",
             display: "flex",
             flexDirection: "row",
-            paddingTop: "10px",
+            paddingTop: "5px",
             paddingLeft: "26px",
             paddingRight: "26px",
           }}
@@ -181,7 +155,7 @@ const ChatComponent = () => {
               setTryDisconnect(!tryDisconnect);
             }}
             style={{
-              width: "80px",
+              width: "90px",
               height: "45px",
               transition: "box-shadow .3s",
               boxShadow: "0 0 10px rgba(33, 33, 33, 0.8)",
@@ -201,25 +175,24 @@ const ChatComponent = () => {
 
           <form
             style={{ width: "100%" }}
-            onSubmit={(e) => sendMessage(e)}
+            onSubmit={(e) => { e.preventDefault(); sendMessage(e) }}
           >
             <input
               type="text"
               value={input}
               placeholder={"Type something ... "}
               onClick={(e) => setTryDisconnect(false)}
-              onKeyDown={(e) => onKeyDownNotEnter()}
+              //onKeyDown={(e) => onKeyDownNotEnter()}
               onChange={(e) => {
                 setTryDisconnect(false);
                 setInput(e.target.value);
               }}
               style={{
-                height: "45px",
+                height: '45px',
                 color: 'white',
+                border: "none",
+                outline: "none",
                 backgroundColor: "transparent",
-                borderRadius: "10px",
-                borderTopLeftRadius: "0",
-                borderBottomLeftRadius: "0",
                 width: "100%",
                 padding: "20px",
                 fontWeight: "normal",
@@ -228,9 +201,76 @@ const ChatComponent = () => {
             />
           </form>
         </div>
-      </div>
-    </div>
+      </Grid>
+    </Grid >
   );
 };
 
 export default ChatComponent;
+
+
+const ChatCards = ({ socketId, msg }) => {
+  if (msg && msg.socketId === 'admin') {
+    return (
+      <div style={{ width: "100%" }}>
+        <div style={{
+          fontSize: '17px',
+          color: 'white', fontWeight: '300',
+          paddingTop: '5px', paddingBottom: '5px',
+          paddingLeft: "13px", paddingRight: '13px',
+          borderRadius: '20px', marginRight: 'auto',
+          marginLeft: "auto", borderTopLeftRadius: '2px',
+          width: "fit-content", marginTop: '20px',
+          textShadow: '0px 0px 10px rgba(0,0,0,0.6)',
+          marginBottom: "20px"
+        }}> {msg.text} </div>
+      </div>
+    );
+  }
+  else if (msg && socketId && msg.socketId === socketId)
+    return (
+      <div style={{ width: "100%" }}>
+        <div style={{
+          textAlign: "start",
+          wordWrap: "break-word",
+          maxWidth: "40%",
+          marginRight: "26px",
+          marginLeft: "auto",
+          color: "white",
+          width: "fit-content",
+          padding: "8px 15px 8px 15px",
+          marginTop: "8px",
+          marginBottom: "8px",
+          textShadow: '0px 0px 40px black',
+          borderRadius: "13px 2px 10px 13px",
+          boxShadow: "0 8px 10px 0 rgba( 31, 38, 135, 0.1 )",
+          background: 'rgba(25, 181, 254, 0.5)',
+          backdropFilter: 'blur( 20.0px )',
+          WebkitBackdropFilter: 'blur( 20.0px )',
+        }}> {msg.text}  </div>
+      </div>
+    );
+  else
+    return (
+      <div style={{ width: "100%" }}>
+        <div style={{
+          textAlign: "start",
+          wordWrap: "break-word",
+          maxWidth: "40%",
+          marginRight: "auto",
+          marginLeft: "26px",
+          color: "black",
+          width: "fit-content",
+          padding: "8px 15px 8px 15px",
+          marginTop: "8px",
+          marginBottom: "8px",
+          textShadow: '0px 0px 40px black',
+          background: 'rgba(255, 255, 255, 0.50)',
+          borderRadius: "2px 10px 13px 13px",
+          backdropFilter: "blur( 4.5px )",
+          WebkitBackdropFilter: "blur( 4.5px )",
+          boxShadow: "0 8px 10px 0 rgba( 31, 38, 135, 0.1 )"
+        }}> {msg ? msg.text : ""}  </div>
+      </div>
+    );
+}

@@ -1,0 +1,11 @@
+.chatScroll::-webkit-scrollbar {
+    display: none;
+}
+
+.chatScroll {
+    -ms-overflow-style: none;
+    width: 100%;
+    height: 92%;
+    overflow-y: scroll;
+    scroll-behavior: smooth,
+}
