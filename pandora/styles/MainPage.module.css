@@ -67,11 +67,11 @@
 
 
 .title{
-    height: 5vh;
+    height: 7vh;
     color:white;
     padding-left: 26px;
-    padding-top: 13px;
+    padding-top: 26px;
     font-weight: bold;
-    font-size: 23px;
+    font-size: 20px;
     text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
 }
