@@ -45,8 +45,7 @@
     opacity: 1;
 }
 
-.otherStyle{
-    animation: name duration timing-function delay iteration-count direction fill-mode;
+.otherStyle{    
     text-align: start;
     word-wrap: break-word;
     max-width: 40%;

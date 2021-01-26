@@ -79,11 +79,7 @@
 	animation-timing-function: ease-in;
     animation-duration: 1s;
     opacity: 1;
-    -moz-user-select: none; 
-    -webkit-user-select: none; 
-    -ms-user-select:none; 
-    user-select:none;
-    -o-user-select:none;
+   
 }
 
 
