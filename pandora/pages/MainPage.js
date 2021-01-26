@@ -9,7 +9,7 @@ const MainPage = () => {
   return (
     <div >
       <div className={styles.title}><a href="">PANDORA</a></div>
-      <Grid container direction="column" justify="center" alignItems="center" style={{ height: "93vh", width: "100vw" }}>
+      <Grid container direction="column" justify="center" alignItems="center" style={{ height: "95vh", width: "100vw" }}>
         {!isClicked ? (<IntroductionComponent setIsClicked={setIsClicked} />) : (<ChatComponent />)}
       </Grid>
     </div>
