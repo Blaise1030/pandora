@@ -22,5 +22,20 @@ const ChatCards = ({ socketId, msg }) => {
     );
 }
 
+export const IsTypingCard = () =>{
+  return (
+    <div className={cardStyles.chatBubble}>
+      <div className={cardStyles.typing}>
+        <div className={cardStyles.dot}></div>
+        <div className={cardStyles.dot}></div>
+        <div className={cardStyles.dot}></div>
+      </div>
+    </div>
+  )
+}
+
 const MessageCard = React.memo(ChatCards);
 export default MessageCard
+
+
+

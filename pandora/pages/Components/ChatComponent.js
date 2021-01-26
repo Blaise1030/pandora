@@ -1,15 +1,10 @@
 import React, { useEffect } from "react";
-import { Card, Container, Grid } from "@material-ui/core";
+import {Grid } from "@material-ui/core";
 import styles from "../../styles/ChatComponent.module.css";
-import CardTiles from "./MessageCardComponent";
-import { VariableSizeList as List } from "react-window";
-import MessageCardComponent from "./MessageCardComponent";
+import CardTiles,{IsTypingCard} from "./MessageCardComponent";
 import io from "socket.io-client";
 
 let socket;
-
-// When user come in we will assign a socket to the user as userId;
-// Assigns the user a room id from a list of unrequested if there is one ;
 
 const ChatComponent = () => {
   const [input, setInput] = React.useState("");
@@ -19,7 +14,7 @@ const ChatComponent = () => {
   const [currentRoom, setCurrentRoom] = React.useState("");  
   const [typing, setTyping] = React.useState(false);
   const [timeOut, timeOutSetter] = React.useState(null);
-  const [partnerTyping, setPartnerTyping] = React.useState(false);
+  const [partnerTyping, setPartnerTyping] = React.useState(false);  
   const ENDPOINT = "http://localhost:5000";
 
   //'https://pandora-app2021.herokuapp.com/'
@@ -71,9 +66,12 @@ const ChatComponent = () => {
         6000
       );
     });
-    socket.on("partner-typing", (payload) => setPartnerTyping(payload));
-    socket.on("partner-no-longer-typing", (payload) =>
-      setPartnerTyping(payload)
+    socket.on("partner-typing", (payload) => {      
+        setPartnerTyping(payload)      
+    });
+    socket.on("partner-no-longer-typing", (payload) => {      
+        setPartnerTyping(payload)
+    }
     );
   }, []);
 
@@ -128,7 +126,8 @@ const ChatComponent = () => {
       <div id={"scrollToBottom"} className={styles.chatScroll}>
         {messageList.map((msg, index) => (
           <CardTiles key={index} socketId={socketId} msg={msg} />
-        ))}
+        ))}        
+        {partnerTyping?<IsTypingCard />:(<div></div>)}
       </div>
       <Grid item style={{ width: "100%" }}>
         <div className={styles.inputDiv}>

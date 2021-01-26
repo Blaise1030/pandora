@@ -9,7 +9,7 @@ const IntroductionComponent = (props) => {
       </p>
       <div className={styles.startButton}
         onClick={() => props.setIsClicked(true)}>
-        <p className={styles.spanColor}>Open Box ?</p>
+        <p className={styles.spanColor}><span>Open Box ?</span></p>
       </div>
     </Grid >
   );
