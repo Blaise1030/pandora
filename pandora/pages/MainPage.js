@@ -7,12 +7,12 @@ import ChatComponent from "./Components/ChatComponent";
 const MainPage = () => {
   const [isClicked, setIsClicked] = React.useState(false);
   return (
-    <body className={styles.gradient}>
+    <div >
       <div className={styles.title}><a href="">PANDORA</a></div>
       <Grid container direction="column" justify="center" alignItems="center" style={{ height: "93vh", width: "100vw" }}>
         {!isClicked ? (<IntroductionComponent setIsClicked={setIsClicked} />) : (<ChatComponent />)}
       </Grid>
-    </body>
+    </div>
   );
 };
 
