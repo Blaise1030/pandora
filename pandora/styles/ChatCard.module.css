@@ -14,8 +14,8 @@
     margin-bottom: 20px;       
 
     animation-name: fadeInOpacity;
-	animation-iteration-count: 1;
-	animation-timing-function: ease-in;
+	  animation-iteration-count: 1;
+	  animation-timing-function: ease-in;
     animation-duration: 0.5s;
     opacity: 1;
   }
@@ -39,8 +39,8 @@
     -webkit-backdrop-filter: blur( 20.0px );
 
     animation-name: fadeInOpacity;
-	animation-iteration-count: 1;
-	animation-timing-function: ease-in;
+	  animation-iteration-count: 1;
+  	animation-timing-function: ease-in;
     animation-duration: 0.3;
     opacity: 1;
 }
@@ -66,8 +66,8 @@
     -webkit-backdrop-filter: blur( 4.5px );
 
     animation-name: fadeInOpacity;
-	animation-iteration-count: 1;
-	animation-timing-function: ease-in;
+	  animation-iteration-count: 1;
+	  animation-timing-function: ease-in;
     animation-duration: 0.3s;
     opacity: 1;
 }
@@ -94,8 +94,8 @@
     -webkit-backdrop-filter: blur( 4.5px );    
     
     animation-name: fadeInOpacity;
-	animation-iteration-count: 1;
-	animation-timing-function: ease-in;
+	  animation-iteration-count: 1;
+	  animation-timing-function: ease-in;
     animation-duration: 0.3s;
     opacity: 1;
   }

@@ -58,7 +58,7 @@ const ChatComponent = () => {
     socket.on("partner-disconnected", () => {     
       setMessageList((msg)=>[...msg,{socketId:'admin',text:'John Doe has disconnected you'}
         ,{socketId:'admin',text:'Finding a new one ...'}]) 
-      setCurrentRoom(null);      
+      setCurrentRoom(null);            
       scroll();      
       setTimeout(
         () =>
@@ -68,9 +68,11 @@ const ChatComponent = () => {
     });
     socket.on("partner-typing", (payload) => {      
         setPartnerTyping(payload)      
+        scroll()
     });
     socket.on("partner-no-longer-typing", (payload) => {      
         setPartnerTyping(payload)
+        scroll()
     }
     );
   }, []);
@@ -127,7 +129,7 @@ const ChatComponent = () => {
         {messageList.map((msg, index) => (
           <CardTiles key={index} socketId={socketId} msg={msg} />
         ))}        
-        {partnerTyping?<IsTypingCard />:(<div></div>)}
+        {partnerTyping && currentRoom?<IsTypingCard />:(<div></div>)}
       </div>
       <Grid item style={{ width: "100%" }}>
         <div className={styles.inputDiv}>

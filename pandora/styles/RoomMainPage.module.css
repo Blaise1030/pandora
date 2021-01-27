@@ -1,0 +1,36 @@
+.title{
+    height: 7vh;
+    color:white;
+    padding-left: 26px;
+    padding-top: 26px;
+    font-weight: bold;
+    font-size: 20px;
+    text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    animation-name: fadeInOpacity;
+	animation-iteration-count: 1;
+	animation-timing-function: ease-in;
+    animation-duration: 1s;
+    opacity: 1;   
+}
+
+.innerDiv{
+    height: 93vh;
+    width: 100%
+}
+
+.fadeIn {
+	opacity: 1;
+	animation-name: fadeInOpacity;
+	animation-iteration-count: 1;
+	animation-timing-function: ease-in;
+	animation-duration: 9s;
+}
+
+@keyframes fadeInOpacity {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
