@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
-import {Grid } from "@material-ui/core";
+import { Grid } from "@material-ui/core";
 import styles from "../../styles/ChatComponent.module.css";
-import CardTiles,{IsTypingCard} from "./MessageCardComponent";
+import CardTiles, { IsTypingCard } from "./MessageCardComponent";
 import io from "socket.io-client";
 
 let socket;
@@ -9,12 +9,14 @@ let socket;
 const ChatComponent = () => {
   const [input, setInput] = React.useState("");
   const [tryDisconnect, setTryDisconnect] = React.useState(false);
-  const [messageList, setMessageList] = React.useState([{socketId:"admin",text:"Finding John Doe ..."}]);
+  const [messageList, setMessageList] = React.useState([
+    { socketId: "admin", text: "Finding John Doe ..." },
+  ]);
   const [socketId, setSocketId] = React.useState("");
-  const [currentRoom, setCurrentRoom] = React.useState("");  
+  const [currentRoom, setCurrentRoom] = React.useState("");
   const [typing, setTyping] = React.useState(false);
   const [timeOut, timeOutSetter] = React.useState(null);
-  const [partnerTyping, setPartnerTyping] = React.useState(false);  
+  const [partnerTyping, setPartnerTyping] = React.useState(false);
   const ENDPOINT = "http://localhost:5000";
 
   //'https://pandora-app2021.herokuapp.com/'
@@ -47,34 +49,38 @@ const ChatComponent = () => {
   }, []);
 
   useEffect(() => {
-    socket.on("join-id", (userObject) => {      
+    socket.on("join-id", (userObject) => {
       setSocketId(userObject.socketId);
-      if (userObject && userObject.room) {     
-        setMessageList([{socketId:'admin',text:'You have found John Doe'}])   
+      if (userObject && userObject.room) {
+        setMessageList([
+          { socketId: "admin", text: "You have found John Doe" },
+        ]);
         setCurrentRoom(userObject.room);
         socket.emit("agree-join", userObject);
       }
     });
-    socket.on("partner-disconnected", () => {     
-      setMessageList((msg)=>[...msg,{socketId:'admin',text:'John Doe has disconnected you'}
-        ,{socketId:'admin',text:'Finding a new one ...'}]) 
-      setCurrentRoom(null);            
-      scroll();      
+    socket.on("partner-disconnected", () => {
+      setMessageList((msg) => [
+        ...msg,
+        { socketId: "admin", text: "John Doe has disconnected you" },
+        { socketId: "admin", text: "Finding a new one ..." },
+      ]);
+      setCurrentRoom(null);
+      scroll();
       setTimeout(
         () =>
           socket.emit("agree-leave", { socketId: socketId, room: currentRoom }),
         6000
       );
     });
-    socket.on("partner-typing", (payload) => {      
-        setPartnerTyping(payload)      
-        scroll()
+    socket.on("partner-typing", (payload) => {
+      setPartnerTyping(payload);
+      scroll();
     });
-    socket.on("partner-no-longer-typing", (payload) => {      
-        setPartnerTyping(payload)
-        scroll()
-    }
-    );
+    socket.on("partner-no-longer-typing", (payload) => {
+      setPartnerTyping(payload);
+      scroll();
+    });
   }, []);
 
   useEffect(() => {
@@ -107,12 +113,15 @@ const ChatComponent = () => {
 
   const onDisconnectButtonClicked = (e) => {
     e.preventDefault();
-    if (tryDisconnect && currentRoom) {      
-      setMessageList((oldMsg) => 
-        [...oldMsg,{socketId:'admin',text:'You have disconnected John Doe'},{socketId:'admin',text:'Finding a new one ...'}])
+    if (tryDisconnect && currentRoom) {
+      setMessageList((oldMsg) => [
+        ...oldMsg,
+        { socketId: "admin", text: "You have disconnected John Doe" },
+        { socketId: "admin", text: "Finding a new one ..." },
+      ]);
       setCurrentRoom(null);
       socket.emit("agree-leave", { socketId: socketId, room: currentRoom }),
-      searchNew();
+        searchNew();
     }
     setTryDisconnect(!tryDisconnect);
   };
@@ -128,21 +137,23 @@ const ChatComponent = () => {
       <div id={"scrollToBottom"} className={styles.chatScroll}>
         {messageList.map((msg, index) => (
           <CardTiles key={index} socketId={socketId} msg={msg} />
-        ))}        
-        {partnerTyping && currentRoom?<IsTypingCard />:(<div></div>)}
+        ))}
+        {partnerTyping && currentRoom ? <IsTypingCard /> : <div></div>}
       </div>
       <Grid item style={{ width: "100%" }}>
         <div className={styles.inputDiv}>
-          <div
-            className={
-              tryDisconnect ? styles.confirmLeaveButton : styles.leaveButton
-            }
-            onClick={onDisconnectButtonClicked}
-          >
-            <span style={{ color: "white" }}>
-              {tryDisconnect ? "sure ?" : "leave"}
-            </span>
-          </div>
+          <a href="#">
+            <div
+              className={
+                tryDisconnect ? styles.confirmLeaveButton : styles.leaveButton
+              }
+              onClick={onDisconnectButtonClicked}
+            >
+              <span style={{ color: "white" }}>
+                {tryDisconnect ? "sure ?" : "leave"}
+              </span>
+            </div>
+          </a>
           <form style={{ width: "100%" }} onSubmit={sendMessage}>
             <input
               type="text"

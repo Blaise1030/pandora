@@ -1,0 +1,77 @@
+.componentDiv {
+  margin: 30px;
+  background-color: white;
+  right: 0;
+  bottom: 80px;
+  position: fixed;
+  max-width: 80%;
+  width: 500px;
+  border-radius: 20px;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.8);
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.3);
+  animation-name: fadeInOpacity;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-in;
+  animation-duration: 0.3s;
+  opacity: 1;
+}
+
+.addButton {
+  padding-top: 12px;
+  width: fit-content;
+  margin-left: auto;
+  padding-bottom: 12px;
+  padding-left: 20px;
+  padding-right: 20px;
+  background-color: black;
+  border-radius: 13px;
+  font-size: 15px;
+  color: white;
+  text-align: center;
+}
+
+.addButton:hover {
+  box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
+  transform: scale(1.05);
+}
+
+.titleInput {
+  width: 100%;
+  font-size: 25px;
+  font-weight: bold;
+  background-color: transparent;
+  border: none;
+  outline: none;
+}
+
+.descriptionInput {
+  width: 100%;
+  font-size: 20px;
+  font-weight: normal;
+  background-color: transparent;
+  -ms-overflow-style: none;
+  border: none;
+  outline: none;
+}
+
+.titleInput::placeholder {
+  color: grey;  
+}
+
+.descriptionInput::placeholder {
+  color: grey;  
+}
+
+.descriptionInput::-webkit-scrollbar {
+  display: none;
+}
+
+@keyframes fadeInOpacity {
+	0% {
+		opacity: 0;
+	}
+	100% {
+		opacity: 1;
+	}
+}
