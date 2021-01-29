@@ -85,8 +85,7 @@ const addRoom = (createRooms: UserCreatesRoom): User => {
 
 
 io.on('connection', (socket: Socket) => {
-  socket.on('on-user-enter', () => {
-    console.log('A user is disconnected')
+  socket.on('on-user-enter', () => {    
     const socketId = socket.id;
     io.to(socketId).emit('returns-existing-rooms', {
       user: { socketId: socketId, room: null },
@@ -105,8 +104,7 @@ io.on('connection', (socket: Socket) => {
     socket.to(socketId).emit('joined-room', user)
   })
 
-  socket.on('on-disconnect', (user: User) => {
-    console.log('A user is disconnected')
+  socket.on('on-disconnect', (user: User) => {    
     const socketId: string = socket.id;
     const updatedUser: User = leaveRoom(user)
     if (user && user.room) {
@@ -118,8 +116,7 @@ io.on('connection', (socket: Socket) => {
 
   socket.on('on-request-create-rooms', (user: UserCreatesRoom) => {
     console.log(user)
-    if (user && user.roomDescription && user.roomTitle && user.user) {
-      console.log("Hey")
+    if (user && user.roomDescription && user.roomTitle && user.user) {      
       const updatedUser: User = addRoom(user)
       socket.join(user.user.socketId)
       io.to(user.user.socketId).emit('create-room-request-accepted', {user:updatedUser,rooms:allAvailableRooms})

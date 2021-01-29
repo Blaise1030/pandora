@@ -4,7 +4,7 @@ import styles from "../../styles/ChatComponent.module.css";
 import CardTiles, { IsTypingCard } from "./MessageCardComponent";
 import io from "socket.io-client";
 
-let socket;
+let socket:SocketIOClient.Socket;
 
 const ChatComponent = () => {
   const [input, setInput] = React.useState("");
@@ -43,8 +43,7 @@ const ChatComponent = () => {
     socket.emit("join");
     return () => {
       socket.emit("disconnect");
-      socket.off();
-      io.socket.removeAllListeners();
+      socket.close();          
     };
   }, []);
 

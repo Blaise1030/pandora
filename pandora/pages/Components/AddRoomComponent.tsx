@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState,useEffect } from "react";
 import styles from "../../styles/AddRoom.module.css";
+import io from 'socket.io-client'
 
-const AddRoomComponent = () => {
+const AddRoomComponent = ({onAddNewRoom}) => {
   const [title,setTitle] = useState("");
   const [description,setDescription] = useState("");
   const [errorOnTitle,setErrorOnTitle] = useState(false);
@@ -28,8 +29,8 @@ const AddRoomComponent = () => {
       setDescription("")
     }
       
-    if (title.length >= 1 && description.length >= 1){
-
+    if (title.length >= 1 && description.length >= 1){       
+      onAddNewRoom(description,title)
     }
   }
 
