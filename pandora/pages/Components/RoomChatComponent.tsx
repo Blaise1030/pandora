@@ -122,7 +122,7 @@ const RoomChatComponent = ({ name, currentRoom, setEnterRoom, setCurrentRoomNumb
         {
           isTypingList.map((message, index) =>
           (<div key={index} style={{ paddingLeft: '26px', color: 'white', textShadow: '0px 0px 40px black' }}>
-            {message.socketId} is typing ...</div>))
+            {message.name} is typing ...</div>))
         }
       </div>
       <Grid item style={{ width: "100%" }}>

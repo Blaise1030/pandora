@@ -33,14 +33,12 @@ const updatesRooms = (roomId: string, updateFunction: (x: Room) => Room) => allA
 var userNumber = 0;
 
 io.on('connection', (socket: Socket) => {
-
   socket.on('get-rooms', () => {
     userNumber += 1;
     socket.emit('all-rooms', allAvailableRooms);
   });
 
   socket.on('user-enter-room', ({ roomId, name }) => {
-    const socketId: string = socket.id;
     updatesRooms(roomId, incrementRoomMember)
     socket.join(roomId);
     io.to(roomId).emit('send-msg', { socketId: 'admin', msg: `${name} joined` })
@@ -49,7 +47,6 @@ io.on('connection', (socket: Socket) => {
   })
 
   socket.on('user-leaves-room', ({ roomId, name }) => {
-    const socketId = socket.id;
     updatesRooms(roomId, decrementRoomMember);
     allAvailableRooms = allAvailableRooms.filter((room: Room) => room.memberNumber > 0)
     io.emit('all-rooms', allAvailableRooms);
@@ -86,13 +83,6 @@ io.on('connection', (socket: Socket) => {
 
   })
 
-  // socket.on('disconnect', (roomId: string) => {
-  //   const socketId = socket.id;
-  //   updatesRooms(roomId, decrementRoomMember)
-  //   allAvailableRooms = allAvailableRooms.filter((room: Room) => room.memberNumber > 0)
-  //   io.to(roomId).emit('send-msg', { socketId: 'admin', msg: `${socketId} left` })
-  //   socket.leave(roomId)
-  // })
 
   socket.on('on-user-message', ({ message, roomId, name }) => {
     const socketId = socket.id;
