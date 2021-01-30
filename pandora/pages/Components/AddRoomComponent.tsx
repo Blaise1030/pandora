@@ -1,12 +1,12 @@
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import styles from "../../styles/AddRoom.module.css";
 import io from 'socket.io-client'
 
-const AddRoomComponent = ({onAddNewRoom}) => {
-  const [title,setTitle] = useState("");
-  const [description,setDescription] = useState("");
-  const [errorOnTitle,setErrorOnTitle] = useState(false);
-  const [errorOnDesc,setErrorOnDesc] = useState(false);
+const AddRoomComponent = ({ socket, setShowPopUp }) => {
+  const [title, setTitle] = useState("");
+  const [description, setDescription] = useState("");
+  const [errorOnTitle, setErrorOnTitle] = useState(false);
+  const [errorOnDesc, setErrorOnDesc] = useState(false);
 
   const setRoomTitle = (e) => {
     e.preventDefault()
@@ -16,21 +16,21 @@ const AddRoomComponent = ({onAddNewRoom}) => {
   const setRoomDescription = (e) => {
     e.preventDefault()
     if (e.target.value.length <= 150)
-      setDescription(e.target.value) 
+      setDescription(e.target.value)
   }
 
   const onAddClicked = () => {
-    if (title.trim().length <= 0){
+    if (title.trim().length <= 0) {
       setErrorOnTitle(true)
       setTitle("")
-    }      
-    if (description.trim().length<=0){
+    }
+    if (description.trim().length <= 0) {
       setErrorOnDesc(true)
       setDescription("")
     }
-      
-    if (title.length >= 1 && description.length >= 1){       
-      onAddNewRoom(description,title)
+    if (title.length >= 1 && description.length >= 1) {
+      socket.emit('create-room', { roomTitle: title, roomDescription: description })
+      setShowPopUp(false)
     }
   }
 
@@ -38,17 +38,17 @@ const AddRoomComponent = ({onAddNewRoom}) => {
     <div className={styles.componentDiv}>
       <div style={{ width: "100%" }}>
         <input
-          value={title}          
-          onChange={setRoomTitle}          
-          placeholder={errorOnTitle?"type title here!":"room title"}
+          value={title}
+          onChange={setRoomTitle}
+          placeholder={errorOnTitle ? "type title here!" : "room title"}
           className={styles.titleInput}
         />
       </div>
       <div style={{ width: "100%" }}>
-        <textarea          
+        <textarea
           value={description}
-          onChange={setRoomDescription}                     
-          placeholder={errorOnDesc?"type description here!":"description"}
+          onChange={setRoomDescription}
+          placeholder={errorOnDesc ? "type description here!" : "description"}
           className={styles.descriptionInput}
         />
       </div>

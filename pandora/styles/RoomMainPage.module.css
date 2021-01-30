@@ -13,9 +13,31 @@
   opacity: 1;
 }
 
-.scrollDiv {
+.noRooms {
   height: 93vh;
-  padding: 30px;
+  width: 100%;
+  display: grid;
+  justify-content: center;
+  align-content: center;
+  text-align: center;
+  color: white;
+  text-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+
+  animation-name: fadeInOpacity;
+  animation-iteration-count: 1;
+  animation-timing-function: ease-in;
+  animation-duration: 1s;
+  opacity: 1;
+}
+
+.scrollDiv {
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 35px;
+  padding-left: 35px;
+  padding-right: 35px;
+  height: 93vh;
+  width: 80%;
   display: flex;
   flex-wrap: wrap;
   justify-content: space-around;
@@ -84,6 +106,7 @@
   0% {
     opacity: 0;
   }
+
   100% {
     opacity: 1;
   }

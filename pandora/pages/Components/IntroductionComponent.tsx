@@ -8,10 +8,7 @@ const IntroductionComponent = (props) => {
         Text whatever, wherever, whenever with a stranger.
       </p>
       <a href="#">
-        <div
-          className={styles.startButton}
-          onClick={() => props.setIsClicked(true)}
-        >
+        <div className={styles.startButton} onClick={() => props.setIsClicked(true)}>
           <p className={styles.spanColor}>
             <span>Open Box ?</span>
           </p>

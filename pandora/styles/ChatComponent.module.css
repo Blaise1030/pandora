@@ -1,9 +1,11 @@
 .chatScroll::-webkit-scrollbar {
     display: none;
 }
-.inputStyle::placeholder{
-    color:white;
+
+.inputStyle::placeholder {
+    color: white;
 }
+
 .chatScroll {
     -ms-overflow-style: none;
     width: 100%;
@@ -11,6 +13,7 @@
     overflow-y: scroll;
     scroll-behavior: smooth,
 }
+
 .inputDiv {
     height: 10%;
     display: flex;
@@ -19,11 +22,13 @@
     padding-left: 26px;
     padding-right: 26px;
 }
+
 .leaveButton .confirmLeaveButton:hover {
     box-shadow: 0 0 50px rgba(33, 33, 33, 0.8);
     background-color: rgba(0, 0, 0, 1);
 }
-.leaveButton{
+
+.leaveButton {
     padding-top: 13px;
     text-align: center;
     width: 90px;
@@ -33,15 +38,16 @@
     background-color: rgba(0, 0, 0, 1);
     border-radius: 10px;
     border: "none";
-    text-align: "center";    
+    text-align: "center";
     text-decoration: "none";
     font-size: "16px";
     outline: 'none';
-    -webkit-user-select: none;  
-    -moz-user-select: none;    
-    -ms-user-select: none;      
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
     user-select: none;
 }
+
 .inputStyle {
     height: 45px;
     color: white;
@@ -51,8 +57,19 @@
     width: 100%;
     padding: 20px;
     font-weight: normal;
-    font-size: 15px;    
+    font-size: 15px;
 }
+
+.chatUserLabel {
+    padding-left: 28px;
+    font-size: 10px;
+    color: white;
+    text-shadow: 0px 0px 10px rgba(0, 0, 0, 0.6);
+    font-weight: normal;
+    margin-top: 10px;
+    margin-bottom: 3px;
+}
+
 .confirmLeaveButton {
     padding-top: 13px;
     text-align: center;
@@ -60,17 +77,15 @@
     height: 45px;
     transition: box-shadow .3s;
     box-shadow: 0 0 10px rgba(33, 33, 33, 0.8);
-    background-color: #eb596e ;
+    background-color: #eb596e;
     border-radius: 10px;
-    border: "none";    
+    border: "none";
     text-align: "center";
     text-decoration: "none";
     font-size: "16px";
     outline: 'none';
-    -webkit-user-select: none;  
-    -moz-user-select: none;    
-    -ms-user-select: none;      
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
     user-select: none;
 }
-
-
